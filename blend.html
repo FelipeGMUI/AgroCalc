@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCalc Web — Blend de Fertilizante</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">🌱 AgroCalc Web</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="custo.html">Custo</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="conversor.html">Conversor</a></li>
+      <li><a href="talhoes.html">Talhões</a></li>
+      <li><a href="blend.html" class="ativo">Blend NPK</a></li>
+    </ul>
+    <button class="btn-tema" id="btnTema" title="Alternar tema">🌙</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" style="padding:3rem 2rem 2.5rem;">
+    <div class="hero-conteudo">
+      <h1>🧪 Blend de Fertilizante — Sistema NPK</h1>
+      <p>Resolução de sistema linear 3×3 para cálculo das quantidades de ureia, superfosfato e KCl</p>
+    </div>
+  </section>
+
+  <section class="secao-conteudo">
+
+    <div class="aviso">
+      📐 <strong>Matemática Aplicada — Sistemas Lineares e Determinantes:</strong> O problema de blend de fertilizantes resulta em um sistema de três equações lineares na forma <strong>A·x = b</strong>, onde A é a matriz de composição nutricional dos fertilizantes, x o vetor de quantidades (kg/ha) e b a meta de NPK. O determinante de A verifica se o sistema possui solução única.
+    </div>
+
+    <div class="cards-grid" style="padding:0; margin-bottom:2rem;">
+
+      <!-- Formulário -->
+      <div class="card">
+        <div class="card-icone">🔬</div>
+        <h3>Meta de NPK (kg/ha)</h3>
+        <p style="font-size:0.88rem; color:var(--cor-texto-suave);">Informe a quantidade desejada de cada nutriente por hectare:</p>
+
+        <div class="form-grupo">
+          <label for="metaN">Nitrogênio — N (kg/ha)</label>
+          <input type="number" id="metaN" placeholder="Ex: 90" min="0" step="0.1">
+        </div>
+        <div class="form-grupo">
+          <label for="metaP">Fósforo — P (kg/ha)</label>
+          <input type="number" id="metaP" placeholder="Ex: 60" min="0" step="0.1">
+        </div>
+        <div class="form-grupo">
+          <label for="metaK">Potássio — K (kg/ha)</label>
+          <input type="number" id="metaK" placeholder="Ex: 60" min="0" step="0.1">
+        </div>
+
+        <button class="btn" onclick="resolverBlend()">Calcular Blend</button>
+        <button class="btn btn-outline" style="margin-top:0.5rem; width:100%;" onclick="carregarExemploBlend()">📥 Carregar Exemplo</button>
+
+        <div class="resultado-box" id="resultadoBlend">
+          <h4>⚗️ Quantidades Necessárias</h4>
+          <div class="resultado-item">
+            <span>Ureia (45%N · 10%P · 5%K)</span>
+            <span class="valor" id="resUreia">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Superfosfato (0%N · 46%P · 0%K)</span>
+            <span class="valor" id="resSuperf">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>KCl (0%N · 0%P · 60%K)</span>
+            <span class="valor" id="resKCl">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Total de fertilizante</span>
+            <span class="valor" id="resTotal">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Determinante da matriz</span>
+            <span class="valor" id="resDet">—</span>
+          </div>
+          <div id="msgSistema" style="margin-top:0.6rem; font-size:0.88rem;"></div>
+        </div>
+      </div>
+
+      <!-- Teoria -->
+      <div class="card">
+        <div class="card-icone">📖</div>
+        <h3>O Sistema Linear NPK</h3>
+
+        <p>Cada fertilizante possui uma composição fixa de N, P e K. Para atingir a meta nutricional, resolvemos o sistema:</p>
+
+        <div style="background:var(--cor-fundo); padding:0.9rem; border-radius:var(--raio); margin:0.8rem 0; font-family:monospace; font-size:0.85rem; line-height:1.9;">
+          0,45·u + 0·s + 0·k = N_meta<br>
+          0,10·u + 0,46·s + 0·k = P_meta<br>
+          0,05·u + 0·s + 0,60·k = K_meta
+        </div>
+
+        <p>Em forma matricial: <strong>A · x = b</strong></p>
+
+        <div style="background:var(--cor-fundo); padding:0.9rem; border-radius:var(--raio); margin:0.8rem 0; font-family:monospace; font-size:0.85rem; line-height:1.9;">
+          A = [0.45  0.10  0.05]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;[0.00  0.46  0.00]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;[0.00  0.00  0.60]
+        </div>
+
+        <h4 style="color:var(--cor-acento); margin-top:0.8rem;">Verificação com Determinante</h4>
+        <p>Se <strong>det(A) ≠ 0</strong>, o sistema tem solução única. Caso contrário, as combinações de fertilizantes são linearmente dependentes e a meta NPK não é atingível com esses produtos.</p>
+
+        <h4 style="color:var(--cor-acento); margin-top:0.8rem;">Conjuntos de Insumos</h4>
+        <div style="font-size:0.88rem; color:var(--cor-texto-suave);">
+          <p>Classificação por tipo (teoria de conjuntos):</p>
+          <p>• <strong>Orgânicos:</strong> {esterco, torta de mamona, pó de rocha}</p>
+          <p>• <strong>Químicos:</strong> {ureia, superfosfato, KCl, MAP, DAP}</p>
+          <p>• <strong>Híbridos:</strong> {bioestimulantes, composto enriquecido}</p>
+          <p>• <strong>Orgânicos ∩ Químicos = ∅</strong> (conjuntos disjuntos)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Verificação do sistema -->
+    <h2>Verificação da Solução</h2>
+    <p style="margin-bottom:1rem; color:var(--cor-texto-suave);">Tabela de conferência: NPK entregue vs. meta definida</p>
+
+    <div class="tabela-wrapper">
+      <table id="tabelaVerif">
+        <thead>
+          <tr><th>Nutriente</th><th>Meta (kg/ha)</th><th>Entregue (kg/ha)</th><th>Diferença</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="5" style="text-align:center; color:var(--cor-texto-suave);">Calcule o blend para ver a verificação</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><strong>AgroCalc Web</strong> &copy; 2025 — Módulo: Blend de Fertilizante NPK</p>
+  <p>Professores: Silvério Luiz de Sousa · Matheus Couto · Patrícia Freitas</p>
+</footer>
+
+<script>
+  // ── Dark mode e menu ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const ab = navLinks.classList.toggle('aberto');
+    hamburger.classList.toggle('aberto', ab);
+    hamburger.setAttribute('aria-expanded', ab);
+  });
+  const btnTema = document.getElementById('btnTema');
+  if (localStorage.getItem('agrocalc-tema') === 'dark') {
+    document.body.classList.add('dark-mode'); btnTema.textContent = '☀️';
+  }
+  btnTema.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const escuro = document.body.classList.contains('dark-mode');
+    btnTema.textContent = escuro ? '☀️' : '🌙';
+    localStorage.setItem('agrocalc-tema', escuro ? 'dark' : 'light');
+  });
+
+  // ── Matriz A de composição (réplica fiel do Python) ──
+  // A[i][j] = fração do nutriente j no fertilizante i
+  // Fertilizantes: 0=Ureia, 1=Superfosfato, 2=KCl
+  // Nutrientes colunas: N, P, K
+  // Atenção: para A·x = b (x = quantidades), cada linha de A
+  // representa a contribuição do fertilizante i para os nutrientes.
+  // Mas no modelo original (blend_fertilizante.py do documento),
+  // A é transposta: linha = fertilizante, coluna = nutriente.
+  // Para resolver A·x = b como descrito, usamos A como está e
+  // interpretamos x como [ureia, superfosfato, KCl].
+  //
+  // Sistema: A^T · x = b_meta  =>  solve(A^T, b_meta)
+  // Neste JS implementamos diretamente a resolução 3×3.
+
+  const A = [
+    [0.45, 0.00, 0.00],  // contribuição de ureia em N, superfosfato em N, KCl em N
+    [0.10, 0.46, 0.00],  // contribuição em P
+    [0.05, 0.00, 0.60],  // contribuição em K
+  ];
+  // Sistema: A·[u, s, k]^T = [N, P, K]^T
+  // A[0][0]*u + A[0][1]*s + A[0][2]*k = N
+  // A[1][0]*u + A[1][1]*s + A[1][2]*k = P
+  // A[2][0]*u + A[2][1]*s + A[2][2]*k = K
+
+  function det3(M) {
+    return M[0][0]*(M[1][1]*M[2][2]-M[1][2]*M[2][1])
+          -M[0][1]*(M[1][0]*M[2][2]-M[1][2]*M[2][0])
+          +M[0][2]*(M[1][0]*M[2][1]-M[1][1]*M[2][0]);
+  }
+
+  function solveLinear(M, b) {
+    // Regra de Cramer para sistema 3×3
+    const d = det3(M);
+    if (Math.abs(d) < 1e-10) return null;
+    const x = [];
+    for (let j = 0; j < 3; j++) {
+      const Mj = M.map((row, i) => row.map((val, k) => k === j ? b[i] : val));
+      x.push(det3(Mj) / d);
+    }
+    return x;
+  }
+
+  function carregarExemploBlend() {
+    document.getElementById('metaN').value = 90;
+    document.getElementById('metaP').value = 60;
+    document.getElementById('metaK').value = 60;
+    resolverBlend();
+  }
+
+  function resolverBlend() {
+    const N = parseFloat(document.getElementById('metaN').value);
+    const P = parseFloat(document.getElementById('metaP').value);
+    const K = parseFloat(document.getElementById('metaK').value);
+
+    if ([N,P,K].some(isNaN) || N<0||P<0||K<0) {
+      alert('Preencha as metas de N, P e K com valores válidos.'); return;
+    }
+
+    const b   = [N, P, K];
+    const det = det3(A);
+    const x   = solveLinear(A, b);
+
+    const resBlend = document.getElementById('resultadoBlend');
+    const msgSist  = document.getElementById('msgSistema');
+
+    document.getElementById('resDet').textContent = det.toFixed(6);
+
+    if (!x || x.some(v => v < -0.001)) {
+      msgSist.innerHTML = '<span style="color:#C62828;">⚠️ Sistema sem solução positiva para estas metas. Revise os valores de NPK.</span>';
+      document.getElementById('resUreia').textContent = '—';
+      document.getElementById('resSuperf').textContent = '—';
+      document.getElementById('resKCl').textContent = '—';
+      document.getElementById('resTotal').textContent = '—';
+      resBlend.classList.add('visivel');
+      return;
+    }
+
+    const [u, s, k] = x.map(v => Math.max(v, 0));
+    document.getElementById('resUreia').textContent  = u.toFixed(2) + ' kg/ha';
+    document.getElementById('resSuperf').textContent = s.toFixed(2) + ' kg/ha';
+    document.getElementById('resKCl').textContent    = k.toFixed(2) + ' kg/ha';
+    document.getElementById('resTotal').textContent  = (u+s+k).toFixed(2) + ' kg/ha';
+    msgSist.innerHTML = Math.abs(det) > 1e-10
+      ? '<span style="color:#1B5E20;">✅ Sistema com solução única (det ≠ 0). Solução válida.</span>'
+      : '<span style="color:#C62828;">⚠️ Determinante ≈ 0. Sistema sem solução única.</span>';
+
+    resBlend.classList.add('visivel');
+
+    // Verificação: A·x vs. b_meta
+    const entregue = [
+      A[0][0]*u + A[0][1]*s + A[0][2]*k,
+      A[1][0]*u + A[1][1]*s + A[1][2]*k,
+      A[2][0]*u + A[2][1]*s + A[2][2]*k,
+    ];
+    const nomes = ['Nitrogênio (N)', 'Fósforo (P)', 'Potássio (K)'];
+    let html = '';
+    nomes.forEach((n, i) => {
+      const diff = entregue[i] - b[i];
+      const ok = Math.abs(diff) < 0.01;
+      html += `<tr>
+        <td>${n}</td>
+        <td>${b[i].toFixed(2)}</td>
+        <td>${entregue[i].toFixed(2)}</td>
+        <td>${diff >= 0 ? '+' : ''}${diff.toFixed(4)}</td>
+        <td style="color:${ok?'#1B5E20':'#C62828'}">${ok?'✅ OK':'⚠️ Desvio'}</td>
+      </tr>`;
+    });
+    document.querySelector('#tabelaVerif tbody').innerHTML = html;
+  }
+</script>
+
+</body>
+</html>

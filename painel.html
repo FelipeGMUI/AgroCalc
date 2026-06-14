@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCalc Web — Painel do Sistema</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">🌱 AgroCalc Web</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="custo.html">Custo</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="conversor.html">Conversor</a></li>
+      <li><a href="talhoes.html">Talhões</a></li>
+      <li><a href="blend.html">Blend NPK</a></li>
+      <li><a href="painel.html" class="ativo">Painel</a></li>
+    </ul>
+    <button class="btn-tema" id="btnTema" title="Alternar tema">🌙</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" style="padding:3rem 2rem 2.5rem;">
+    <div class="hero-conteudo">
+      <h1>🏛️ Painel do Sistema — Como Funciona</h1>
+      <p>Arquitetura de computadores, linha do tempo do agro digital e glossário técnico</p>
+    </div>
+  </section>
+
+  <section class="secao-conteudo">
+
+    <!-- ── Arquitetura de Computadores ── -->
+    <h2>🖥️ Arquitetura do Computador e o AgroCalc Web</h2>
+    <p style="margin-bottom:1.5rem; color:var(--cor-texto-suave);">
+      Todo sistema digital — incluindo o AgroCalc Web — depende de uma arquitetura de hardware e software que processa, armazena e exibe informações. Entender essa estrutura é fundamental para qualquer profissional de tecnologia.
+    </p>
+
+    <div class="cards-grid" style="padding:0; margin-bottom:2.5rem;">
+
+      <div class="card">
+        <div class="card-icone">⚙️</div>
+        <h3>CPU — Unidade Central de Processamento</h3>
+        <p>O "cérebro" do computador. Executa instruções em linguagem de máquina (binário). No AgroCalc Web, a CPU interpreta o JavaScript que realiza os cálculos de custo, PMT e conversões numéricas.</p>
+        <div class="card-tags">
+          <span class="tag">Processamento</span>
+          <span class="tag">Binário</span>
+          <span class="tag">Clock</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icone">🧠</div>
+        <h3>RAM — Memória de Acesso Aleatório</h3>
+        <p>Armazenamento temporário e volátil. Quando o usuário preenche os formulários do AgroCalc Web, os valores ficam na RAM do navegador até serem processados ou a aba ser fechada.</p>
+        <div class="card-tags">
+          <span class="tag">Temporária</span>
+          <span class="tag">Volátil</span>
+          <span class="tag">Alta velocidade</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icone">💾</div>
+        <h3>Armazenamento — SSD / HDD</h3>
+        <p>Memória permanente e não volátil. Os arquivos HTML, CSS e Python do AgroCalc Web ficam armazenados no disco. O localStorage do navegador salva a preferência de tema (claro/escuro).</p>
+        <div class="card-tags">
+          <span class="tag">Permanente</span>
+          <span class="tag">Não volátil</span>
+          <span class="tag">localStorage</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icone">🌐</div>
+        <h3>Navegador — Interface de Saída</h3>
+        <p>O navegador (Chrome, Firefox, Edge) interpreta o HTML e CSS, executa o JavaScript e renderiza a interface visual do AgroCalc Web na tela do usuário. É o equivalente ao monitor e placa de vídeo.</p>
+        <div class="card-tags">
+          <span class="tag">Renderização</span>
+          <span class="tag">DOM</span>
+          <span class="tag">JavaScript Engine</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Diagrama de fluxo -->
+    <div style="background:var(--cor-fundo-card); border:1px solid var(--cor-borda); border-radius:var(--raio-lg); padding:1.5rem; margin-bottom:2.5rem; box-shadow:var(--sombra); overflow-x:auto;">
+      <h3 style="color:var(--cor-primaria); margin-bottom:1rem;">Fluxo de dados no AgroCalc Web</h3>
+      <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; font-size:0.9rem; font-weight:600;">
+        <div style="background:var(--cor-primaria); color:#fff; padding:0.5rem 1rem; border-radius:var(--raio); text-align:center;">👤 Usuário<br><small style="font-weight:400;">Formulário</small></div>
+        <span style="color:var(--cor-destaque); font-size:1.3rem;">→</span>
+        <div style="background:var(--cor-acento); color:#fff; padding:0.5rem 1rem; border-radius:var(--raio); text-align:center;">🌐 HTML/CSS<br><small style="font-weight:400;">Interface</small></div>
+        <span style="color:var(--cor-destaque); font-size:1.3rem;">→</span>
+        <div style="background:#5D4037; color:#fff; padding:0.5rem 1rem; border-radius:var(--raio); text-align:center;">⚡ JavaScript<br><small style="font-weight:400;">Lógica / CPU</small></div>
+        <span style="color:var(--cor-destaque); font-size:1.3rem;">→</span>
+        <div style="background:#546E7A; color:#fff; padding:0.5rem 1rem; border-radius:var(--raio); text-align:center;">🧠 RAM<br><small style="font-weight:400;">Dados temporários</small></div>
+        <span style="color:var(--cor-destaque); font-size:1.3rem;">→</span>
+        <div style="background:var(--cor-secundaria); color:#fff; padding:0.5rem 1rem; border-radius:var(--raio); text-align:center;">📊 Resultado<br><small style="font-weight:400;">Tabelas / Cards</small></div>
+      </div>
+    </div>
+
+    <!-- ── Linha do tempo ── -->
+    <h2>⏳ Linha do Tempo — A Computação no Agronegócio</h2>
+    <p style="margin-bottom:1.5rem; color:var(--cor-texto-suave);">Sete marcos históricos que transformaram a agricultura com tecnologia digital:</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">🌾</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Década de 1960</div>
+          <h4>Primeiros Computadores na Pesquisa Agropecuária</h4>
+          <p>A Embrapa (fundada em 1973) e instituições americanas como o USDA começam a usar mainframes para análise estatística de experimentos agrícolas. Os primeiros bancos de dados de cultivares são criados em cartões perfurados.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">📡</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Década de 1980</div>
+          <h4>Computadores Pessoais e Planilhas Eletrônicas</h4>
+          <p>O surgimento do IBM PC e do Lotus 1-2-3 permite que técnicos agrícolas criem planilhas de custo de produção e controle de estoque. O manejo rural ganha sua primeira ferramenta digital acessível.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">🛰️</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Década de 1990</div>
+          <h4>GPS e Agricultura de Precisão</h4>
+          <p>O sistema GPS (Global Positioning System) torna-se acessível ao setor civil. Tratores com receptores GPS passam a fazer a aplicação variável de insumos, inaugurando a agricultura de precisão. Mapas de produtividade começam a ser gerados digitalmente.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">🌍</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Anos 2000</div>
+          <h4>Internet e Sistemas de Gestão Rural (ERP)</h4>
+          <p>A massificação da internet permite o surgimento dos primeiros ERPs rurais (como o Agrotools e o Farm Management). Produtores passam a emitir notas fiscais eletrônicas e monitorar preços de commodities em tempo real.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">📱</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Anos 2010</div>
+          <h4>Smartphones, Drones e Big Data</h4>
+          <p>Aplicativos móveis para monitoramento de pragas, drones com câmeras multiespectrais e plataformas de big data agrícola chegam ao campo. Sensores de solo transmitem dados via IoT. O agronegócio brasileiro torna-se referência mundial em tecnologia.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">🤖</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Anos 2020</div>
+          <h4>Inteligência Artificial e Agricultura Autônoma</h4>
+          <p>Modelos de machine learning preveem safras com base em dados climáticos e satelitais. Tratores autônomos operam sem motorista via GPS RTK. Sistemas embarcados com processadores ARM e linguagens como Python processam dados de sensores em tempo real nas bordas da lavoura (edge computing).</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-ponto">🌱</div>
+        <div class="timeline-body">
+          <div class="timeline-ano">Hoje — AgroCalc Web</div>
+          <h4>Ferramentas Web Acessíveis ao Pequeno Produtor</h4>
+          <p>Sistemas web responsivos como o AgroCalc Web democratizam o acesso às ferramentas de cálculo e gestão. Qualquer produtor com um celular e acesso à internet pode calcular custos, simular financiamentos e analisar produtividade de talhões — sem instalar nenhum software.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Glossário ── -->
+    <h2 style="margin-top:2.5rem;">📖 Glossário Técnico</h2>
+    <p style="margin-bottom:1.2rem; color:var(--cor-texto-suave);">Conceitos fundamentais de computação aplicados ao contexto do AgroCalc Web:</p>
+
+    <dl class="glossario-grid">
+      <div class="glossario-item">
+        <dt>Bit</dt>
+        <dd>Menor unidade de informação em computação. Vale 0 ou 1. Um sensor de umidade que retorna "1" indica que o solo está adequado para irrigação.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>Byte</dt>
+        <dd>Conjunto de 8 bits. Um byte pode representar 256 valores (0 a 255). Ex: a leitura de umidade "AF" em hexadecimal = 175 decimal = 1 byte de dados do sensor.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>Sistema Binário (Base 2)</dt>
+        <dd>Sistema de numeração que usa apenas os algarismos 0 e 1. É a linguagem nativa dos processadores. Ex: 175 em decimal = 10101111 em binário.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>Hexadecimal (Base 16)</dt>
+        <dd>Sistema de numeração com 16 símbolos (0–9, A–F). Compacta representações binárias longas. Muito usado em protocolos de sensores agrícolas e endereços de memória.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>CPU (Processador)</dt>
+        <dd>Componente que executa operações aritméticas e lógicas. No AgroCalc Web, a CPU do seu dispositivo processa cada cálculo de PMT ou sistema linear em microssegundos.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>RAM</dt>
+        <dd>Random Access Memory — memória volátil usada para dados temporários. Os formulários do AgroCalc Web e os resultados calculados ficam na RAM enquanto a aba está aberta.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>Porta Lógica AND</dt>
+        <dd>Circuito digital que retorna 1 (verdadeiro) somente quando TODAS as entradas são 1. Usada no módulo Conversor para decidir se deve irrigar: umidade OK AND temperatura OK.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>IoT (Internet of Things)</dt>
+        <dd>Rede de dispositivos físicos conectados à internet. No agro, inclui sensores de solo, estações meteorológicas e medidores de fluxo hídrico que enviam dados para sistemas como o AgroCalc.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>Algoritmo</dt>
+        <dd>Sequência finita de instruções para resolver um problema. Os scripts Python do AgroCalc Web (custo_producao.py, financiamento.py etc.) são algoritmos que processam entradas agrícolas e produzem resultados matemáticos.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>HTML semântico</dt>
+        <dd>Uso de tags HTML com significado estrutural (<code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>) em vez de <code>&lt;div&gt;</code> genéricos. Melhora acessibilidade e SEO do AgroCalc Web.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>CSS Grid</dt>
+        <dd>Sistema de layout bidimensional do CSS. Utilizado no AgroCalc Web para organizar os cards dos módulos em colunas que se adaptam automaticamente ao tamanho da tela.</dd>
+      </div>
+      <div class="glossario-item">
+        <dt>Responsividade</dt>
+        <dd>Capacidade de um site de adaptar seu layout a diferentes tamanhos de tela (celular, tablet, desktop). O AgroCalc Web funciona de 320px a 1920px de largura usando media queries CSS.</dd>
+      </div>
+    </dl>
+
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>AgroCalc Web</strong> &copy; 2025 — Módulo: Painel do Sistema</p>
+  <p>Professores: Silvério Luiz de Sousa · Matheus Couto · Patrícia Freitas</p>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const ab = navLinks.classList.toggle('aberto');
+    hamburger.classList.toggle('aberto', ab);
+    hamburger.setAttribute('aria-expanded', ab);
+  });
+  const btnTema = document.getElementById('btnTema');
+  if (localStorage.getItem('agrocalc-tema') === 'dark') {
+    document.body.classList.add('dark-mode'); btnTema.textContent = '☀️';
+  }
+  btnTema.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const escuro = document.body.classList.contains('dark-mode');
+    btnTema.textContent = escuro ? '☀️' : '🌙';
+    localStorage.setItem('agrocalc-tema', escuro ? 'dark' : 'light');
+  });
+</script>
+
+</body>
+</html>

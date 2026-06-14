@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCalc Web — Calculadora de Custo</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">🌱 AgroCalc Web</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="custo.html" class="ativo">Custo</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="conversor.html">Conversor</a></li>
+      <li><a href="talhoes.html">Talhões</a></li>
+      <li><a href="blend.html">Blend NPK</a></li>
+    </ul>
+    <button class="btn-tema" id="btnTema" title="Alternar tema">🌙</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- Cabeçalho da página -->
+  <section class="hero" style="padding: 3rem 2rem 2.5rem;">
+    <div class="hero-conteudo">
+      <h1>💰 Calculadora de Custo de Produção</h1>
+      <p>Baseada na função afim C(x) = Custo Fixo + Custo Variável × Sacas produzidas</p>
+    </div>
+  </section>
+
+  <section class="secao-conteudo">
+
+    <!-- Contextualização matemática -->
+    <div class="aviso">
+      📐 <strong>Matemática Aplicada — Funções Lineares:</strong> A função de custo C(x) = cf + cv·x é uma função afim onde <em>cf</em> (custo fixo) é o termo independente e <em>cv</em> (custo variável por saca) é o coeficiente angular. O ponto de equilíbrio é calculado por <strong>x* = cf / (pv − cv)</strong>, onde <em>pv</em> é o preço de venda por saca.
+    </div>
+
+    <!-- ── Formulário de entrada ── -->
+    <div class="cards-grid" style="padding: 0; margin-bottom: 1.5rem;">
+
+      <div class="card">
+        <div class="card-icone">📝</div>
+        <h3>Parâmetros da Lavoura</h3>
+
+        <div class="form-grupo">
+          <label for="custoFixo">Custo Fixo Total (R$)</label>
+          <input type="number" id="custoFixo" placeholder="Ex: 45000" min="0" step="0.01">
+        </div>
+
+        <div class="form-grupo">
+          <label for="custoVariavel">Custo Variável por Saca (R$)</label>
+          <input type="number" id="custoVariavel" placeholder="Ex: 32.50" min="0" step="0.01">
+        </div>
+
+        <div class="form-grupo">
+          <label for="precoVenda">Preço de Venda por Saca (R$)</label>
+          <input type="number" id="precoVenda" placeholder="Ex: 85.00" min="0" step="0.01">
+        </div>
+
+        <div class="form-grupo">
+          <label for="sacasProduzidas">Sacas Produzidas (x)</label>
+          <input type="number" id="sacasProduzidas" placeholder="Ex: 2000" min="0" step="1">
+        </div>
+
+        <button class="btn" onclick="calcularCusto()">Calcular</button>
+
+        <!-- Resultado principal -->
+        <div class="resultado-box" id="resultadoCusto">
+          <h4>📊 Resultado da Análise</h4>
+          <div class="resultado-item">
+            <span>Custo Total C(x)</span>
+            <span class="valor" id="resCustoTotal">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Receita Total</span>
+            <span class="valor" id="resReceita">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Lucro / Prejuízo</span>
+            <span class="valor" id="resLucro">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Ponto de Equilíbrio</span>
+            <span class="valor" id="resPonto">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Margem de Contribuição</span>
+            <span class="valor" id="resMargemUnit">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explicação da fórmula -->
+      <div class="card">
+        <div class="card-icone">📚</div>
+        <h3>Como funciona o cálculo</h3>
+
+        <h4 style="color:var(--cor-acento); margin-top:0.8rem;">Função de Custo</h4>
+        <p style="font-family:monospace; background:var(--cor-fundo); padding:0.6rem; border-radius:6px; margin-bottom:0.8rem;">
+          C(x) = cf + cv × x
+        </p>
+        <p>Onde <strong>cf</strong> são os custos fixos (arrendamento, salários, depreciação) e <strong>cv</strong> é o custo por saca produzida (sementes, defensivos, colheita).</p>
+
+        <h4 style="color:var(--cor-acento); margin-top:1rem;">Ponto de Equilíbrio</h4>
+        <p style="font-family:monospace; background:var(--cor-fundo); padding:0.6rem; border-radius:6px; margin-bottom:0.8rem;">
+          x* = cf / (pv − cv)
+        </p>
+        <p>É a quantidade mínima de sacas para que a receita cubra todos os custos. Abaixo desse ponto há prejuízo; acima, lucro.</p>
+
+        <h4 style="color:var(--cor-acento); margin-top:1rem;">Margem de Contribuição</h4>
+        <p style="font-family:monospace; background:var(--cor-fundo); padding:0.6rem; border-radius:6px; margin-bottom:0.8rem;">
+          MC = pv − cv
+        </p>
+        <p>Cada saca vendida acima do ponto de equilíbrio contribui MC reais para cobrir os custos fixos e gerar lucro.</p>
+      </div>
+
+    </div><!-- /cards-grid -->
+
+    <!-- Tabela de análise de cenários -->
+    <h2>Análise de Cenários</h2>
+    <p style="margin-bottom:1rem; color:var(--cor-texto-suave);">Tabela gerada automaticamente para diferentes volumes de produção, usando os valores inseridos acima.</p>
+
+    <div class="tabela-wrapper">
+      <table id="tabelaCenarios">
+        <thead>
+          <tr>
+            <th>Sacas (x)</th>
+            <th>Custo Total C(x)</th>
+            <th>Receita</th>
+            <th>Lucro/Prejuízo</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="5" style="text-align:center; color:var(--cor-texto-suave);">Preencha os campos acima e clique em Calcular</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>AgroCalc Web</strong> &copy; 2025 — Módulo: Calculadora de Custo de Produção</p>
+  <p>Professores: Silvério Luiz de Sousa · Matheus Couto · Patrícia Freitas</p>
+</footer>
+
+<script>
+  // ── Dark mode e menu hambúrguer ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const ab = navLinks.classList.toggle('aberto');
+    hamburger.classList.toggle('aberto', ab);
+    hamburger.setAttribute('aria-expanded', ab);
+  });
+  const btnTema = document.getElementById('btnTema');
+  if (localStorage.getItem('agrocalc-tema') === 'dark') {
+    document.body.classList.add('dark-mode'); btnTema.textContent = '☀️';
+  }
+  btnTema.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const escuro = document.body.classList.contains('dark-mode');
+    btnTema.textContent = escuro ? '☀️' : '🌙';
+    localStorage.setItem('agrocalc-tema', escuro ? 'dark' : 'light');
+  });
+
+  // ── Lógica de cálculo (replica custo_producao.py) ──
+  function fmt(valor) {
+    return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calcularCusto() {
+    const cf = parseFloat(document.getElementById('custoFixo').value);
+    const cv = parseFloat(document.getElementById('custoVariavel').value);
+    const pv = parseFloat(document.getElementById('precoVenda').value);
+    const x  = parseFloat(document.getElementById('sacasProduzidas').value);
+
+    // Validação de entrada (try/except equivalente)
+    if ([cf, cv, pv, x].some(isNaN) || cf < 0 || cv < 0 || pv <= 0 || x < 0) {
+      alert('Por favor, preencha todos os campos com valores válidos e positivos.');
+      return;
+    }
+    if (pv <= cv) {
+      alert('O preço de venda deve ser maior que o custo variável por saca.');
+      return;
+    }
+
+    // C(x) = cf + cv * x
+    const ct      = cf + cv * x;
+    const receita = pv * x;
+    const lucro   = receita - ct;
+    const pe      = cf / (pv - cv);          // ponto de equilíbrio
+    const mc      = pv - cv;                 // margem de contribuição unitária
+
+    // Exibir resultados
+    document.getElementById('resCustoTotal').textContent = fmt(ct);
+    document.getElementById('resReceita').textContent    = fmt(receita);
+
+    const elLucro = document.getElementById('resLucro');
+    elLucro.textContent = fmt(lucro);
+    elLucro.style.color = lucro >= 0 ? 'var(--cor-secundaria)' : '#D32F2F';
+
+    document.getElementById('resPonto').textContent    = pe.toFixed(1) + ' sacas';
+    document.getElementById('resMargemUnit').textContent = fmt(mc) + '/saca';
+
+    document.getElementById('resultadoCusto').classList.add('visivel');
+
+    // Gerar tabela de cenários
+    gerarTabelaCenarios(cf, cv, pv, pe);
+  }
+
+  function gerarTabelaCenarios(cf, cv, pv, pe) {
+    // Cenários: 50%, 75%, 100%, 125%, 150% do ponto de equilíbrio
+    const percentuais = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+    let html = '';
+    percentuais.forEach(p => {
+      const sacas   = Math.round(pe * p);
+      const ct      = cf + cv * sacas;
+      const rec     = pv * sacas;
+      const lucro   = rec - ct;
+      const sit     = lucro >= 0 ? '✅ Lucro' : '❌ Prejuízo';
+      const cor     = lucro >= 0 ? 'color:#1B5E20' : 'color:#C62828';
+      html += `<tr>
+        <td>${sacas.toLocaleString('pt-BR')}</td>
+        <td>${'R$ ' + ct.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+        <td>${'R$ ' + rec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+        <td style="${cor}; font-weight:600">${'R$ ' + lucro.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+        <td style="${cor}">${sit}</td>
+      </tr>`;
+    });
+    document.querySelector('#tabelaCenarios tbody').innerHTML = html;
+  }
+</script>
+
+</body>
+</html>

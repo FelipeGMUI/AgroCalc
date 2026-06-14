@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCalc Web — Painel Principal</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ======================================================
+     CABEÇALHO E NAVEGAÇÃO
+     UC1 — HTML Semântico: uso de <header>, <nav>
+     ====================================================== -->
+<header>
+  <nav class="navbar">
+    <div class="logo">🌱 AgroCalc Web</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="ativo">Início</a></li>
+      <li><a href="custo.html">Custo</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="conversor.html">Conversor</a></li>
+      <li><a href="talhoes.html">Talhões</a></li>
+      <li><a href="blend.html">Blend NPK</a></li>
+    </ul>
+    <!-- Botão toggle dark mode (bônus +2 pts) -->
+    <button class="btn-tema" id="btnTema" title="Alternar tema claro/escuro">🌙</button>
+    <!-- Menu hambúrguer (responsividade mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<!-- ======================================================
+     CONTEÚDO PRINCIPAL
+     UC1 — HTML Semântico: uso de <main>, <section>
+     ====================================================== -->
+<main>
+
+  <!-- Seção Hero -->
+  <section class="hero">
+    <div class="hero-conteudo">
+      <h1>Tecnologia a serviço do campo</h1>
+      <p>O AgroCalc Web reúne calculadoras financeiras, análise de produtividade e ferramentas digitais para o produtor rural moderno — tudo em um só lugar.</p>
+      <div class="hero-badges">
+        <span class="badge">🌾 Agronegócio</span>
+        <span class="badge">📐 Matemática Aplicada</span>
+        <span class="badge">💻 Computação</span>
+        <span class="badge">🌐 HTML/CSS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Módulos do sistema -->
+  <section class="secao-titulo">
+    <h2>Módulos do Sistema</h2>
+    <p>Escolha uma ferramenta para começar a usar</p>
+  </section>
+
+  <!-- CSS Grid de cards com animação fadeUp -->
+  <section class="cards-grid" aria-label="Módulos disponíveis">
+
+    <article class="card">
+      <div class="card-icone">💰</div>
+      <h3>Calculadora de Custo</h3>
+      <p>Calcule o custo total de produção por hectare usando a função afim C(x) = cf + cv × x e encontre o ponto de equilíbrio da sua lavoura.</p>
+      <div class="card-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Matemática</span>
+        <span class="tag">Python</span>
+      </div>
+      <a href="custo.html" class="btn">Acessar módulo →</a>
+    </article>
+
+    <article class="card">
+      <div class="card-icone">🚜</div>
+      <h3>Financiamento Agrícola</h3>
+      <p>Simule parcelas de financiamento de máquinas e equipamentos com juros compostos (fórmula PMT) e veja a tabela de amortização completa.</p>
+      <div class="card-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Matemática</span>
+        <span class="tag">Python</span>
+      </div>
+      <a href="financiamento.html" class="btn">Acessar módulo →</a>
+    </article>
+
+    <article class="card">
+      <div class="card-icone">🔢</div>
+      <h3>Conversor de Dados</h3>
+      <p>Converta valores entre sistemas decimal, binário e hexadecimal — aplicado a sensores de umidade do solo e códigos de campo.</p>
+      <div class="card-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Computação</span>
+        <span class="tag">JavaScript</span>
+      </div>
+      <a href="conversor.html" class="btn">Acessar módulo →</a>
+    </article>
+
+    <article class="card">
+      <div class="card-icone">🗺️</div>
+      <h3>Mapa de Talhões</h3>
+      <p>Visualize a produtividade de cada setor da fazenda como uma matriz NumPy. Analise médias, máximos e estimativas de produção total.</p>
+      <div class="card-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Matrizes</span>
+        <span class="tag">Python</span>
+      </div>
+      <a href="talhoes.html" class="btn">Acessar módulo →</a>
+    </article>
+
+    <article class="card">
+      <div class="card-icone">🧪</div>
+      <h3>Blend de Fertilizante</h3>
+      <p>Calcule as quantidades ideais de ureia, superfosfato e KCl para atingir a meta de NPK. Resolve um sistema linear 3×3 com verificação de determinante.</p>
+      <div class="card-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Sistemas Lineares</span>
+        <span class="tag">Python</span>
+      </div>
+      <a href="blend.html" class="btn">Acessar módulo →</a>
+    </article>
+
+    <article class="card">
+      <div class="card-icone">🏛️</div>
+      <h3>Painel do Sistema</h3>
+      <p>Conheça a arquitetura de computadores por trás do AgroCalc Web: CPU, memória RAM, armazenamento, linha do tempo do agro digital e glossário técnico.</p>
+      <div class="card-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Computação</span>
+        <span class="tag">História</span>
+      </div>
+      <a href="painel.html" class="btn">Acessar módulo →</a>
+    </article>
+
+  </section><!-- /cards-grid -->
+
+</main>
+
+<!-- ======================================================
+     RODAPÉ — UC1: uso de <footer>
+     ====================================================== -->
+<footer>
+  <p><strong>AgroCalc Web</strong> &copy; 2025 — Projeto Integrador</p>
+  <p>Disciplinas: Linguagem de Apresentação | Introdução à Computação | Matemática Aplicada</p>
+  <p>Professores: Silvério Luiz de Sousa · Matheus Couto · Patrícia Freitas</p>
+</footer>
+
+<!-- ======================================================
+     JAVASCRIPT — Navegação responsiva + Dark Mode
+     ====================================================== -->
+<script>
+  // ── Menu hambúrguer (responsividade mobile) ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    const aberto = navLinks.classList.toggle('aberto');
+    hamburger.classList.toggle('aberto', aberto);
+    hamburger.setAttribute('aria-expanded', aberto);
+  });
+
+  // Fechar menu ao clicar em um link (mobile)
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('aberto');
+      hamburger.classList.remove('aberto');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // ── Dark mode toggle (bônus +2 pts) ──
+  const btnTema = document.getElementById('btnTema');
+  const temaSalvo = localStorage.getItem('agrocalc-tema');
+
+  if (temaSalvo === 'dark') {
+    document.body.classList.add('dark-mode');
+    btnTema.textContent = '☀️';
+  }
+
+  btnTema.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const escuro = document.body.classList.contains('dark-mode');
+    btnTema.textContent = escuro ? '☀️' : '🌙';
+    localStorage.setItem('agrocalc-tema', escuro ? 'dark' : 'light');
+  });
+</script>
+
+</body>
+</html>

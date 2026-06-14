@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCalc Web — Financiamento Agrícola</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">🌱 AgroCalc Web</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="custo.html">Custo</a></li>
+      <li><a href="financiamento.html" class="ativo">Financiamento</a></li>
+      <li><a href="conversor.html">Conversor</a></li>
+      <li><a href="talhoes.html">Talhões</a></li>
+      <li><a href="blend.html">Blend NPK</a></li>
+    </ul>
+    <button class="btn-tema" id="btnTema" title="Alternar tema">🌙</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" style="padding: 3rem 2rem 2.5rem;">
+    <div class="hero-conteudo">
+      <h1>🚜 Financiamento Agrícola</h1>
+      <p>Simule parcelas de máquinas e equipamentos rurais com a fórmula PMT de juros compostos</p>
+    </div>
+  </section>
+
+  <section class="secao-conteudo">
+
+    <div class="aviso">
+      📐 <strong>Matemática Financeira:</strong> A fórmula PMT (Pagamento) calcula a parcela de um financiamento a juros compostos:
+      <strong>PMT = PV × [i × (1+i)ⁿ] / [(1+i)ⁿ − 1]</strong>,
+      onde <em>PV</em> é o valor financiado, <em>i</em> a taxa mensal e <em>n</em> o número de parcelas.
+    </div>
+
+    <div class="cards-grid" style="padding: 0; margin-bottom: 2rem;">
+
+      <!-- Formulário -->
+      <div class="card">
+        <div class="card-icone">📋</div>
+        <h3>Dados do Financiamento</h3>
+
+        <div class="form-grupo">
+          <label for="valorMaquina">Valor da Máquina (R$)</label>
+          <input type="number" id="valorMaquina" placeholder="Ex: 250000" min="0" step="0.01">
+        </div>
+
+        <div class="form-grupo">
+          <label for="entrada">Entrada (R$)</label>
+          <input type="number" id="entrada" placeholder="Ex: 50000" min="0" step="0.01" value="0">
+        </div>
+
+        <div class="form-grupo">
+          <label for="taxaMensal">Taxa de Juros Mensal (%)</label>
+          <input type="number" id="taxaMensal" placeholder="Ex: 1.5" min="0.01" step="0.01">
+        </div>
+
+        <div class="form-grupo">
+          <label for="numParcelas">Número de Parcelas (meses)</label>
+          <select id="numParcelas">
+            <option value="12">12 meses (1 ano)</option>
+            <option value="24" selected>24 meses (2 anos)</option>
+            <option value="36">36 meses (3 anos)</option>
+            <option value="48">48 meses (4 anos)</option>
+            <option value="60">60 meses (5 anos)</option>
+          </select>
+        </div>
+
+        <button class="btn" onclick="calcularFinanciamento()">Simular Financiamento</button>
+
+        <div class="resultado-box" id="resultadoFin">
+          <h4>💳 Resumo do Financiamento</h4>
+          <div class="resultado-item">
+            <span>Valor Financiado (PV)</span>
+            <span class="valor" id="resPV">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Parcela Mensal (PMT)</span>
+            <span class="valor" id="resPMT">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Total Pago</span>
+            <span class="valor" id="resTotalPago">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Total de Juros</span>
+            <span class="valor" id="resJurosTotal">—</span>
+          </div>
+          <div class="resultado-item">
+            <span>Custo Efetivo Total (CET)</span>
+            <span class="valor" id="resCET">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teoria -->
+      <div class="card">
+        <div class="card-icone">📖</div>
+        <h3>Fórmula PMT</h3>
+
+        <p>O Sistema de Amortização Francês (SAF), também chamado de Price, mantém parcelas iguais durante todo o financiamento.</p>
+
+        <h4 style="color:var(--cor-acento); margin-top:1rem;">Fórmula completa</h4>
+        <pre style="background:var(--cor-fundo); padding:0.8rem; border-radius:6px; font-size:0.85rem; overflow-x:auto; white-space:pre-wrap; margin-bottom:0.8rem;">PMT = PV × [i × (1+i)ⁿ]
+          [(1+i)ⁿ − 1]</pre>
+
+        <h4 style="color:var(--cor-acento); margin-top:0.8rem;">Amortização</h4>
+        <p>A cada mês, a parcela divide-se em duas partes:</p>
+        <ul style="margin-left:1.2rem; line-height:2; color:var(--cor-texto-suave); font-size:0.92rem;">
+          <li><strong>Juros</strong> = Saldo devedor × taxa mensal</li>
+          <li><strong>Amortização</strong> = PMT − Juros</li>
+        </ul>
+        <p style="margin-top:0.6rem;">O saldo devedor diminui a cada mês com o valor amortizado.</p>
+
+        <h4 style="color:var(--cor-acento); margin-top:0.8rem;">Exemplo real</h4>
+        <p>Trator de R$ 200.000, entrada de R$ 50.000, taxa 1,2% a.m., 36 parcelas:</p>
+        <p style="font-family:monospace; background:var(--cor-fundo); padding:0.5rem; border-radius:6px; margin-top:0.4rem;">
+          PMT ≈ R$ 5.342,05/mês
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Tabela de amortização -->
+    <h2>Tabela de Amortização</h2>
+    <p style="margin-bottom:1rem; color:var(--cor-texto-suave);">Detalhamento mês a mês do financiamento simulado</p>
+
+    <div class="tabela-wrapper">
+      <table id="tabelaAmort">
+        <thead>
+          <tr>
+            <th>Mês</th>
+            <th>Parcela</th>
+            <th>Juros</th>
+            <th>Amortização</th>
+            <th>Saldo Devedor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="5" style="text-align:center; color:var(--cor-texto-suave);">Preencha os campos e clique em Simular</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>AgroCalc Web</strong> &copy; 2025 — Módulo: Financiamento Agrícola</p>
+  <p>Professores: Silvério Luiz de Sousa · Matheus Couto · Patrícia Freitas</p>
+</footer>
+
+<script>
+  // ── Dark mode e menu ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const ab = navLinks.classList.toggle('aberto');
+    hamburger.classList.toggle('aberto', ab);
+    hamburger.setAttribute('aria-expanded', ab);
+  });
+  const btnTema = document.getElementById('btnTema');
+  if (localStorage.getItem('agrocalc-tema') === 'dark') {
+    document.body.classList.add('dark-mode'); btnTema.textContent = '☀️';
+  }
+  btnTema.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const escuro = document.body.classList.contains('dark-mode');
+    btnTema.textContent = escuro ? '☀️' : '🌙';
+    localStorage.setItem('agrocalc-tema', escuro ? 'dark' : 'light');
+  });
+
+  // ── Lógica de financiamento (replica financiamento.py) ──
+  function fmt(v) {
+    return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+  }
+
+  function calcularFinanciamento() {
+    const vm = parseFloat(document.getElementById('valorMaquina').value);
+    const en = parseFloat(document.getElementById('entrada').value) || 0;
+    const im = parseFloat(document.getElementById('taxaMensal').value);
+    const n  = parseInt(document.getElementById('numParcelas').value);
+
+    if (isNaN(vm) || isNaN(im) || vm <= 0 || im <= 0) {
+      alert('Preencha o valor da máquina e a taxa de juros corretamente.');
+      return;
+    }
+    if (en >= vm) { alert('A entrada não pode ser maior ou igual ao valor da máquina.'); return; }
+
+    const pv   = vm - en;
+    const taxa = im / 100;
+
+    // PMT = PV * [i*(1+i)^n] / [(1+i)^n - 1]
+    const fator = Math.pow(1 + taxa, n);
+    const pmt   = pv * (taxa * fator) / (fator - 1);
+
+    const totalPago  = pmt * n;
+    const jurosTotal = totalPago - pv;
+    const cet        = ((totalPago / pv) - 1) * 100;
+
+    document.getElementById('resPV').textContent        = fmt(pv);
+    document.getElementById('resPMT').textContent       = fmt(pmt);
+    document.getElementById('resTotalPago').textContent = fmt(totalPago);
+    document.getElementById('resJurosTotal').textContent= fmt(jurosTotal);
+    document.getElementById('resCET').textContent       = cet.toFixed(2) + '%';
+
+    document.getElementById('resultadoFin').classList.add('visivel');
+
+    // Tabela de amortização
+    let saldo = pv;
+    let html  = '';
+    for (let mes = 1; mes <= n; mes++) {
+      const juros = saldo * taxa;
+      const amort = pmt - juros;
+      saldo      -= amort;
+      const saldoReal = Math.max(saldo, 0);
+      html += `<tr>
+        <td>${mes}</td>
+        <td>${fmt(pmt)}</td>
+        <td style="color:#C62828">${fmt(juros)}</td>
+        <td style="color:#1B5E20">${fmt(amort)}</td>
+        <td>${fmt(saldoReal)}</td>
+      </tr>`;
+    }
+    document.querySelector('#tabelaAmort tbody').innerHTML = html;
+  }
+</script>
+
+</body>
+</html>

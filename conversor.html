@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCalc Web — Conversor de Dados</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">🌱 AgroCalc Web</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="custo.html">Custo</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="conversor.html" class="ativo">Conversor</a></li>
+      <li><a href="talhoes.html">Talhões</a></li>
+      <li><a href="blend.html">Blend NPK</a></li>
+    </ul>
+    <button class="btn-tema" id="btnTema" title="Alternar tema">🌙</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" style="padding:3rem 2rem 2.5rem;">
+    <div class="hero-conteudo">
+      <h1>🔢 Conversor de Sistemas de Numeração</h1>
+      <p>Converta valores de sensores entre Decimal, Binário e Hexadecimal — aplicado ao agronegócio digital</p>
+    </div>
+  </section>
+
+  <section class="secao-conteudo">
+
+    <div class="aviso">
+      💻 <strong>Introdução à Computação — Sistemas de Numeração:</strong> Os computadores operam internamente em binário (base 2). Sensores agrícolas transmitem dados em hexadecimal (base 16) para compactação. O decimal (base 10) é a notação humana. Dominar a conversão entre esses sistemas é fundamental para o desenvolvimento de sistemas embarcados no agro.
+    </div>
+
+    <!-- ── Conversor interativo ── -->
+    <div class="cards-grid" style="padding:0; margin-bottom:2rem;">
+
+      <div class="card">
+        <div class="card-icone">🔄</div>
+        <h3>Conversor Interativo</h3>
+
+        <div class="form-grupo">
+          <label for="baseEntrada">Base de entrada</label>
+          <select id="baseEntrada" onchange="limparConversor()">
+            <option value="10">Decimal (base 10)</option>
+            <option value="2">Binário (base 2)</option>
+            <option value="16">Hexadecimal (base 16)</option>
+          </select>
+        </div>
+
+        <div class="form-grupo">
+          <label for="valorEntrada">Valor a converter</label>
+          <input type="text" id="valorEntrada" placeholder="Ex: 175 (decimal)" oninput="converterTempo()">
+        </div>
+
+        <div class="conversor-resultado" id="resultadoConv" style="display:none;">
+          <div>🔟 Decimal:     <strong id="convDec">—</strong></div>
+          <div>🔵 Binário:     <strong id="convBin">—</strong></div>
+          <div>🟠 Hexadecimal: <strong id="convHex">—</strong></div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <h4 style="color:var(--cor-acento);">Exemplo prático — Sensor de Umidade</h4>
+          <p style="font-size:0.9rem; color:var(--cor-texto-suave);">O sensor retornou o código <strong>AF</strong> (hex). Clique para carregar:</p>
+          <button class="btn btn-outline" style="margin-top:0.5rem;" onclick="carregarExemplo('AF','16')">Carregar AF (hex → sensor umidade)</button>
+        </div>
+      </div>
+
+      <!-- Tabela de referência rápida -->
+      <div class="card">
+        <div class="card-icone">📊</div>
+        <h3>Tabela de Referência</h3>
+        <p style="font-size:0.88rem; color:var(--cor-texto-suave); margin-bottom:0.8rem;">Valores comuns de sensores agrícolas</p>
+        <div class="tabela-wrapper">
+          <table>
+            <thead>
+              <tr><th>Decimal</th><th>Binário</th><th>Hexadecimal</th><th>Contexto</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>0000 0000</td><td>00</td><td>Sensor desligado</td></tr>
+              <tr><td>64</td><td>0100 0000</td><td>40</td><td>Umidade 25%</td></tr>
+              <tr><td>128</td><td>1000 0000</td><td>80</td><td>Umidade 50%</td></tr>
+              <tr><td>175</td><td>1010 1111</td><td>AF</td><td>Umidade 68%</td></tr>
+              <tr><td>192</td><td>1100 0000</td><td>C0</td><td>Umidade 75%</td></tr>
+              <tr><td>255</td><td>1111 1111</td><td>FF</td><td>Sensor saturado</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-outline" style="margin-top:0.8rem; width:100%;" onclick="converterTodos()">Verificar toda a tabela →</button>
+      </div>
+
+    </div>
+
+    <!-- ── Calculadora de Área de Talhão ── -->
+    <h2>📐 Calculadora de Área de Talhão</h2>
+    <p style="margin-bottom:1rem; color:var(--cor-texto-suave);">Converta medidas de campo entre hectares, alqueires e m² — também com representação binária da área.</p>
+
+    <div class="cards-grid" style="padding:0; margin-bottom:2rem;">
+      <div class="card">
+        <div class="card-icone">🌾</div>
+        <h3>Conversão de Área</h3>
+        <div class="form-grupo">
+          <label for="valorArea">Valor da Área</label>
+          <input type="number" id="valorArea" placeholder="Ex: 50" min="0" step="0.01">
+        </div>
+        <div class="form-grupo">
+          <label for="unidadeArea">Unidade de entrada</label>
+          <select id="unidadeArea">
+            <option value="ha">Hectares (ha)</option>
+            <option value="alq">Alqueires paulistas</option>
+            <option value="m2">Metros quadrados (m²)</option>
+            <option value="acres">Acres</option>
+          </select>
+        </div>
+        <button class="btn" onclick="calcularArea()">Converter Área</button>
+        <div class="resultado-box" id="resultadoArea">
+          <h4>Conversões de Área</h4>
+          <div class="resultado-item"><span>Hectares</span><span class="valor" id="areaHa">—</span></div>
+          <div class="resultado-item"><span>Alqueires paulistas</span><span class="valor" id="areaAlq">—</span></div>
+          <div class="resultado-item"><span>Metros quadrados</span><span class="valor" id="areaM2">—</span></div>
+          <div class="resultado-item"><span>Acres</span><span class="valor" id="areaAcres">—</span></div>
+          <div class="resultado-item"><span>Área em binário (m²)</span><span class="valor" id="areaBin">—</span></div>
+          <div class="resultado-item"><span>Área em hexadecimal (m²)</span><span class="valor" id="areaHex">—</span></div>
+        </div>
+      </div>
+
+      <!-- Lógica digital: porta AND -->
+      <div class="card">
+        <div class="card-icone">⚡</div>
+        <h3>Simulador de Porta Lógica AND</h3>
+        <p style="font-size:0.9rem; color:var(--cor-texto-suave);">Decisão de irrigação: o sistema irriga <strong>somente se</strong> umidade E temperatura estiverem dentro dos limites.</p>
+
+        <div class="logica-box" style="margin-top:1rem;">
+          <div class="switch-grupo">
+            <label>🌡️ Temperatura OK (≤ 35°C)</label>
+            <label class="switch">
+              <input type="checkbox" id="swTemp" onchange="atualizarAND()">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-grupo">
+            <label>💧 Umidade OK (≤ 60%)</label>
+            <label class="switch">
+              <input type="checkbox" id="swUmid" onchange="atualizarAND()">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="saida-logica nao-irrigar" id="saidaAND">
+            ❌ NÃO IRRIGAR — Condições não atendidas (AND = 0)
+          </div>
+        </div>
+
+        <!-- Tabela verdade AND -->
+        <h4 style="color:var(--cor-acento); margin-top:1rem;">Tabela Verdade — Porta AND</h4>
+        <div class="tabela-wrapper">
+          <table>
+            <thead><tr><th>Temp. OK (A)</th><th>Umid. OK (B)</th><th>Irrigar? (A AND B)</th></tr></thead>
+            <tbody>
+              <tr><td>0 (Falso)</td><td>0 (Falso)</td><td>0 (Falso)</td></tr>
+              <tr><td>0 (Falso)</td><td>1 (Verdadeiro)</td><td>0 (Falso)</td></tr>
+              <tr><td>1 (Verdadeiro)</td><td>0 (Falso)</td><td>0 (Falso)</td></tr>
+              <tr style="background:#E8F5E9;"><td>1 (Verdadeiro)</td><td>1 (Verdadeiro)</td><td><strong>1 (Verdadeiro)</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <p><strong>AgroCalc Web</strong> &copy; 2025 — Módulo: Conversor de Dados e Lógica Digital</p>
+  <p>Professores: Silvério Luiz de Sousa · Matheus Couto · Patrícia Freitas</p>
+</footer>
+
+<script>
+  // ── Dark mode e menu ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const ab = navLinks.classList.toggle('aberto');
+    hamburger.classList.toggle('aberto', ab);
+    hamburger.setAttribute('aria-expanded', ab);
+  });
+  const btnTema = document.getElementById('btnTema');
+  if (localStorage.getItem('agrocalc-tema') === 'dark') {
+    document.body.classList.add('dark-mode'); btnTema.textContent = '☀️';
+  }
+  btnTema.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const escuro = document.body.classList.contains('dark-mode');
+    btnTema.textContent = escuro ? '☀️' : '🌙';
+    localStorage.setItem('agrocalc-tema', escuro ? 'dark' : 'light');
+  });
+
+  // ── Conversor de sistemas de numeração ──
+  function converterTempo() {
+    const base  = parseInt(document.getElementById('baseEntrada').value);
+    const valor = document.getElementById('valorEntrada').value.trim().toUpperCase();
+    if (!valor) { document.getElementById('resultadoConv').style.display='none'; return; }
+
+    try {
+      const decimal = parseInt(valor, base);
+      if (isNaN(decimal) || decimal < 0) throw new Error();
+
+      document.getElementById('convDec').textContent = decimal.toString(10);
+      // Formata binário em grupos de 4
+      const bin = decimal.toString(2).padStart(Math.ceil(decimal.toString(2).length/4)*4,'0');
+      const binGrupos = bin.replace(/(.{4})/g, '$1 ').trim();
+      document.getElementById('convBin').textContent = binGrupos;
+      document.getElementById('convHex').textContent = decimal.toString(16).toUpperCase().padStart(2,'0');
+      document.getElementById('resultadoConv').style.display = 'block';
+    } catch {
+      document.getElementById('convDec').textContent = 'Valor inválido para esta base';
+      document.getElementById('convBin').textContent = '—';
+      document.getElementById('convHex').textContent = '—';
+      document.getElementById('resultadoConv').style.display = 'block';
+    }
+  }
+
+  function limparConversor() {
+    document.getElementById('valorEntrada').value = '';
+    document.getElementById('resultadoConv').style.display = 'none';
+    document.getElementById('valorEntrada').placeholder =
+      document.getElementById('baseEntrada').value === '16' ? 'Ex: AF (hexadecimal)' :
+      document.getElementById('baseEntrada').value === '2'  ? 'Ex: 10101111 (binário)' :
+      'Ex: 175 (decimal)';
+  }
+
+  function carregarExemplo(val, base) {
+    document.getElementById('baseEntrada').value = base;
+    document.getElementById('valorEntrada').value = val;
+    converterTempo();
+  }
+
+  function converterTodos() {
+    // Demonstração: verifica a tabela AF (175 decimal)
+    carregarExemplo('175', '10');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Calculadora de área ──
+  function calcularArea() {
+    const val   = parseFloat(document.getElementById('valorArea').value);
+    const unid  = document.getElementById('unidadeArea').value;
+    if (isNaN(val) || val <= 0) { alert('Informe uma área válida.'); return; }
+
+    let ha;
+    // Fatores de conversão
+    if (unid === 'ha')    ha = val;
+    if (unid === 'alq')   ha = val * 2.42;     // 1 alqueire paulista = 2,42 ha
+    if (unid === 'm2')    ha = val / 10000;
+    if (unid === 'acres') ha = val * 0.404686;
+
+    const m2     = ha * 10000;
+    const alq    = ha / 2.42;
+    const acres  = ha / 0.404686;
+    const m2Int  = Math.round(m2);
+
+    document.getElementById('areaHa').textContent    = ha.toLocaleString('pt-BR', {maximumFractionDigits:4}) + ' ha';
+    document.getElementById('areaAlq').textContent   = alq.toLocaleString('pt-BR', {maximumFractionDigits:4}) + ' alq';
+    document.getElementById('areaM2').textContent    = m2.toLocaleString('pt-BR', {maximumFractionDigits:2}) + ' m²';
+    document.getElementById('areaAcres').textContent = acres.toLocaleString('pt-BR', {maximumFractionDigits:4}) + ' ac';
+    document.getElementById('areaBin').textContent   = m2Int.toString(2);
+    document.getElementById('areaHex').textContent   = m2Int.toString(16).toUpperCase();
+
+    document.getElementById('resultadoArea').classList.add('visivel');
+  }
+
+  // ── Porta lógica AND ──
+  function atualizarAND() {
+    const temp = document.getElementById('swTemp').checked;
+    const umid = document.getElementById('swUmid').checked;
+    const and  = temp && umid;
+    const el   = document.getElementById('saidaAND');
+    if (and) {
+      el.textContent = '✅ IRRIGAR — Todas as condições atendidas (AND = 1)';
+      el.className   = 'saida-logica irrigar';
+    } else {
+      el.textContent = '❌ NÃO IRRIGAR — Condições não atendidas (AND = 0)';
+      el.className   = 'saida-logica nao-irrigar';
+    }
+  }
+</script>
+
+</body>
+</html>
